@@ -1,0 +1,12 @@
+---
+- name: Run ip addr
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Run ip address command
+      command: ip addr
+      register: result
+
+    - name: Show output
+      debug:
+        var: result.stdout_lines
