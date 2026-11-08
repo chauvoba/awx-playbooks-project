@@ -1,0 +1,24 @@
+---
+- name: Check AWX JWT
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: List AWX credential files
+      find:
+        paths: /tmp
+        patterns: "*"
+      register: tmp_files
+
+    - name: Show tmp files
+      debug:
+        var: tmp_files.files
+
+    - name: Check env vars
+      shell: env | grep -i "awx\|tower\|conjur\|token\|jwt"
+      register: env_output
+      ignore_errors: true
+
+    - name: Show env
+      debug:
+        var: env_output.stdout_lines
